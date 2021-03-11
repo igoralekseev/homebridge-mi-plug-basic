@@ -1,5 +1,5 @@
 declare module 'miio' {
-  export function device(config: MiioDeviceConfig): Promise<MiioDevice>;
+  export function device(config: MiioDeviceConfig): Promise<any>;
 }
 
 interface MiioDeviceConfig {
@@ -7,7 +7,4 @@ interface MiioDeviceConfig {
   token: string,
 }
 
-interface MiioDevice {
-  get: (prop: string) => Promise<any>,
-  set: (prop: string, value: any) => Promise<any>,
-}
+

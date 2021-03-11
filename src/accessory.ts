@@ -44,7 +44,7 @@ class PowerSwitch implements AccessoryPlugin {
 
   private readonly switchService: Service;
   private readonly informationService: Service;
-  private readonly miioDevice: Promise<MiioDevice>;
+  private readonly miioDevice: Promise<any>;
 
   constructor(log: Logging, config: AccessoryConfig, api: API) {
     this.config = getRight(PowerSwitchConfig.decode(config), `${ACCESSORY_NAME} wrong config:`);
@@ -63,7 +63,7 @@ class PowerSwitch implements AccessoryPlugin {
     this.switchService.getCharacteristic(hap.Characteristic.On)
       .on(CharacteristicEventTypes.GET, (callback: CharacteristicGetCallback) => {
         this.miioDevice
-          .then(device => device.get('power'))
+          .then(device => device.power())
           .then(isOn => {
             log.info(`Current state of the switch was returned: ${isOn? 'ON': 'OFF' }`);
             callback(undefined, isOn);
@@ -71,8 +71,8 @@ class PowerSwitch implements AccessoryPlugin {
       })
       .on(CharacteristicEventTypes.SET, (value: CharacteristicValue, callback: CharacteristicSetCallback) => {
         this.miioDevice
-        .then(device => device.set('power', value))
-        .then(device => device.get('power'))
+        .then(device => device.changePower(value))
+        .then(device => device.power())
         .then(isOn => {
           log.info(`Switch state was set to: ${isOn? 'ON': 'OFF' }`);
           callback();
