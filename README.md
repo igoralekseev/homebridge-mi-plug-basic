@@ -1,6 +1,6 @@
 # homebridge-mi-plug-basic
 
-Homebridge plugin wit basic support of xiaomu smart plugs
+Homebridge plugin wit basic support of xiaomi smart plugs
 
 Supported models:
 - chuangmi.plug.m1

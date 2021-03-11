@@ -1,0 +1,43 @@
+{
+  "name": "homebridge-mi-plug-basic",
+  "version": "1.0.0",
+  "description": "Homebridge plugin wit basic support of xiaomi smart plugs",
+  "main": "dist/accessory.js",
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "build": "rimraf ./dist && tsc",
+    "prepublishOnly": "npm run build",
+    "postpublish": "npm run clean",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Igor Alekseev <lublushokolad@gmail.com>",
+  "engines": {
+    "homebridge": ">=1.0.0"
+  },
+  "keywords": [
+    "homebridge-plugin"
+  ],
+  "license": "ISC",
+  "files": [
+    "LICENSE",
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/igoralekseev/homebridge-mi-plug-basic.git"
+  },
+  "bugs": {
+    "url": "https://github.com/igoralekseev/homebridge-mi-plug-basic/issues"
+  },
+  "devDependencies": {
+    "@types/node": "10.17.19",
+    "typescript": "^3.8.3",
+    "rimraf": "^3.0.2",
+    "homebridge": "^1.0.4"
+  },
+  "dependencies": {
+    "fp-ts": "^2.9.5",
+    "io-ts": "^2.2.15",
+    "miio": "github:igoralekseev/miio#master"
+  }
+}
