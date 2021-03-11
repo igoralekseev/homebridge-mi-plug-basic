@@ -39,17 +39,17 @@ class PowerSwitch {
         this.switchService.getCharacteristic(hap.Characteristic.On)
             .on("get" /* GET */, (callback) => {
             this.miioDevice
-                .then(device => device.power())
-                .then(isOn => {
+                .then(device => {
+                const isOn = device.property('power');
                 log.info(`Current state of the switch was returned: ${isOn ? 'ON' : 'OFF'}`);
                 callback(undefined, isOn);
             });
         })
             .on("set" /* SET */, (value, callback) => {
             this.miioDevice
-                .then(device => device.changePower(value))
-                .then(device => device.power())
-                .then(isOn => {
+                .then(device => {
+                device.changePower(value);
+                const isOn = device.property('power');
                 log.info(`Switch state was set to: ${isOn ? 'ON' : 'OFF'}`);
                 callback();
             });

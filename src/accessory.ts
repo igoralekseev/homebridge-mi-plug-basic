@@ -58,25 +58,24 @@ class PowerSwitch implements AccessoryPlugin {
       .then(device => log.info(`${ACCESSORY_NAME} finished initializing!`, device))
       .catch((error: unknown) => log.error(`${ACCESSORY_NAME} initialization failed:`, error));
 
-
     this.switchService = new hap.Service.Switch(this.name);
     this.switchService.getCharacteristic(hap.Characteristic.On)
       .on(CharacteristicEventTypes.GET, (callback: CharacteristicGetCallback) => {
         this.miioDevice
-          .then(device => device.power())
-          .then(isOn => {
+          .then(device => {
+            const isOn = device.property('power');
             log.info(`Current state of the switch was returned: ${isOn? 'ON': 'OFF' }`);
             callback(undefined, isOn);
           });
       })
       .on(CharacteristicEventTypes.SET, (value: CharacteristicValue, callback: CharacteristicSetCallback) => {
         this.miioDevice
-        .then(device => device.changePower(value))
-        .then(device => device.power())
-        .then(isOn => {
-          log.info(`Switch state was set to: ${isOn? 'ON': 'OFF' }`);
-          callback();
-        });
+          .then(device => {
+            device.changePower(value);
+            const isOn = device.property('power');
+            log.info(`Switch state was set to: ${isOn? 'ON': 'OFF' }`);
+            callback();
+          });
       });
 
     this.informationService = new hap.Service.AccessoryInformation()
